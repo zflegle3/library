@@ -82,10 +82,11 @@ function createBtn(btnType,selectedBookObject) {
         tempBtn.setAttribute("id",`${selectedBookObject.index}`);
         if (selectedBookObject.readYN) {
             tempBtn.setAttribute("class","read-btn read-yes");
+            tempBtn.appendChild(document.createTextNode("Read"));
         } else {
             tempBtn.setAttribute("class","read-btn read-no");
+            tempBtn.appendChild(document.createTextNode("Not Read"));
         }
-        tempBtn.appendChild(document.createTextNode("Read"));
         return tempBtn; //returns back button element
     } 
 }
@@ -149,9 +150,9 @@ function readToggle(e) {
 
     //change text content of button
     if (yesTog) {
-        btnSelected.textContent = `I read this book`;
+        btnSelected.textContent = "Read";
       } else {
-        btnSelected.textContent = `I havent read this book`;
+        btnSelected.textContent = "Not Read";
       }
 
 }
