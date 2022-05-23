@@ -1,45 +1,75 @@
 const myLibrary = [];
 
-
 function Book(title, author, pages, readYN) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    //need if case to handle y/n and populate readYN w/ boolean value
     this.readYN = readYN;
-    let lower = readYN.toLowerCase();
-    if (lower === "y") {
-        this.readYN = true;
-    } else if (lower === "n") {
-        this.readYN = false;
-    } else {
-        this.readYN = "Error, Delete book and repopulate field with y or n."
-    }
     this.index = myLibrary.length; 
-    //object added to end of array so index is length of library prior to adding object
 }
 
-Book.prototype.sayInfo = function() {
-    console.log(`${this.title} by ${this.author}, is ${this.pages} pages, and ${this.readYN}`);
+function createUIForm() {
+    //Select div element 
+    let formIn = document.getElementById("form");
+    formIn.classList.toggle("visable")
+    //SubmitButton
+    let submitBtn = document.getElementById("submit");
+    submitBtn.addEventListener("click",submitBookData);
 }
 
-function addBookToLibrary() {
-    //Takes user input for title, author, pages, and read(Y/N)
-    let tempTitle = prompt("What is the title of the book?","The Old Man and the Sea");
-    let tempAuthor = prompt("Who is the Author of this book?","Ernest Hemmingway");
-    let tempPages = prompt("How many pages was this book?","420");
-    let tempReadYN = prompt("Have you read this book?","y/n");
+
+function submitBookData(e) {
+    e.preventDefault();
+    //validate book data
+    let bookDataIn = document.querySelectorAll(".form-input");
+    let errorMsgs = document.querySelectorAll(".form-error");
+    let submitGate = true;
+    
+    for (let i=0; i<bookDataIn.length; i++) {
+        if (!bookDataIn[i].checkValidity()) {
+            //prevent submision
+            submitGate = false;
+            //update error message
+            errorMsgs[i].innerHTML = bookDataIn[i].validationMessage
+            //toggle error class on input 
+            bookDataIn[i].classList = "form-input error";
+        } else if(bookDataIn[i].checkValidity()) {
+            bookDataIn[i].classList = "form-input valid";
+            errorMsgs[i].innerHTML = "";
+        }
+    }
+    if (submitGate) {
+        addBookToLibrary(bookDataIn);
+        document.getElementById("form").classList.toggle("visable")
+        document.getElementById("form").reset();
+        for (let i=0; i<bookDataIn.length; i++) {
+            bookDataIn[i].classList = "form-input";
+        }
+    } 
+}
+
+
+
+function addBookToLibrary(newBookData) {
+    //Creates a form to take in user data
+    let tempTitle = newBookData[0].value.trim();
+    let tempAuthor = newBookData[1].value.trim();
+    let tempPages = newBookData[2].value.trim();
+    let tempReadN = newBookData[4].checked;
+    let tempReadYN = true;
+    if (tempReadN) {
+        tempReadYN = false;
+    }
     //Calls Book constructor to create new book object with user input values
     let tempBook = new Book(tempTitle, tempAuthor, tempPages, tempReadYN);
     //Adds new book object to end of library array 
     myLibrary.push(tempBook);
     updateDisplay()
-    console.log(tempReadYN)
 }
 
 function updateDisplay() {
     //iterates through objects in library & creates new div objects to display book info
-    clearLibrary(); //clears old book div elements before repopulating
+    clearDisplayDiv(".library-container"); //clears old book div elements before repopulating
     for (i=0; i < myLibrary.length; i++) {
         //Selects keys in current(i) Book Object
         let tempBookVars = Object.keys(myLibrary[i]);
@@ -95,12 +125,12 @@ function updateBtns() {
     //Adds event listeners on buttons once display is updated
     //Remove Buttons
     let removeBtns = document.querySelectorAll(".remove-btn");
-    for (const rmButton of removeBtns) {
+    for (let rmButton of removeBtns) {
         rmButton.addEventListener("click",removeBookToLibrary);
       }
     //Read Buttons
     let readBtns = document.querySelectorAll(".read-btn");
-    for (const readButton of readBtns) {
+    for (let readButton of readBtns) {
         readButton.addEventListener("click",readToggle);
       }
 
@@ -111,7 +141,7 @@ function removeBookToLibrary(e) {
     //removes book from library array //
     myLibrary.splice(e.srcElement.id,1)
     //removes all dom elements from book library
-    clearLibrary()
+    //clearLibrary()
     //updates indexes of objects and buttons in library 
     for (i=0; i < myLibrary.length; i++) {
         myLibrary[i].index = i;
@@ -120,56 +150,48 @@ function removeBookToLibrary(e) {
     updateDisplay()
 }
 
-function clearLibrary() {
+function clearDisplayDiv(classIn) {
+    let divSelected = document.querySelector(classIn);
     //removes all elements from library container div
-    while (libraryContainer.firstChild) {
-        let tempRemoveDiv = libraryContainer.firstChild;
-        while (tempRemoveDiv.firstChild) {
-            tempRemoveDiv.removeChild(tempRemoveDiv.firstChild);
-        }
-        libraryContainer.removeChild(libraryContainer.firstChild);
+    while (divSelected.firstChild) {
+        let tempRemoveDiv = divSelected.firstChild;
+        //while (tempRemoveDiv.firstChild) {
+        //    tempRemoveDiv.removeChild(tempRemoveDiv.firstChild);
+        //}
+        divSelected.removeChild(divSelected.firstChild);
     }
 }
 
 function readToggle(e) {
-    console.log(e);
-    let btnSelected = e.srcElement
+    let btnSelected = e.srcElement;
     let classes = btnSelected.classList;
     //toggle class for button to change display of button 
     let yesTog = classes.toggle("read-yes");
-    let noTog = classes.toggle("read-no");
-    //console.log(yesTog);
-    console.log(btnSelected);
+    // let noTog = classes.toggle("read-no");
 
-    //update object value
+    //update object read property value & changes text content of button
     if (yesTog) {
         myLibrary[e.srcElement.id].readYN = true;
-      } else {
-        myLibrary[e.srcElement.id].readYN = false;
-      }
-
-    //change text content of button
-    if (yesTog) {
         btnSelected.textContent = "Read";
       } else {
+        myLibrary[e.srcElement.id].readYN = false;
         btnSelected.textContent = "Not Read";
       }
-
 }
   
-
 //initial test cases
-const book1 = new Book("Dune","Frank Herbert",420,"y");
-myLibrary.push(book1);
-const book2 = new Book("The Catcher in the Rye","J.D. Salinger", 241,"n");
-myLibrary.push(book2);
-const book3 = new Book("The Hitchhiker's Guide to the Galaxy","Douglas Adams", 208,"y");
-myLibrary.push(book3);
+// const book1 = new Book("Dune","Frank Herbert",420,true);
+// myLibrary.push(book1);
+// const book2 = new Book("The Catcher in the Rye","J.D. Salinger", 241,false);
+// myLibrary.push(book2);
+// const book3 = new Book("The Hitchhiker's Guide to the Galaxy","Douglas Adams", 208,true);
+// myLibrary.push(book3);
 
 
 //event listener for buttons
 const newBtn = document.querySelector(".new-btn");
 const libraryContainer = document.querySelector(".library-container");
-newBtn.addEventListener("click",addBookToLibrary);
+//newBtn.addEventListener("click",addBookToLibrary);
+newBtn.addEventListener("click",createUIForm);
 
 
