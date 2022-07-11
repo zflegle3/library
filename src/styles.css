@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 10px; /* Changed per doc for rem */
+	/*font: inherit;*/
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*Main Document Styles*/
+body {
+    height: 100vh;
+    width: 100vw;
+    display: grid;    
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: [one] 1fr [two] 1fr [three] 4fr;
+
+    font-family: "Roboto",Arial, Helvetica, sans-serif;
+}
+
+.library-info {
+    grid-area: 1 / 1 / 2 / 5 ;
+}
+
+.library-controls {
+    grid-area: 2 / 1 / 3 / 5  ;
+}
+
+
+.library-container {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(3,1fr);
+
+    grid-area: 3 / 1 / 4 / 5  ;
+}
+
+/*Book Info Styles */
+
+.book-info-card {
+
+}
+
+.book-info-card p {
+    font-size: 1.5rem;
+}
+
+.book-info-card p:first-child {
+    font-size: 2rem;
+}
+
+.read-btn {
+    background-color: rgb(255, 90, 90);
+}
+
+.read-yes {
+    background-color: rgb(90, 255, 112);
+}
+
+/*Element Specific Styles */
+
+form {
+    display: none;
+}
+
+form.visable {
+    display: flex;
+}
+
+input {
+    border: 2px solid rgb(101, 101, 101);
+    border-radius: 3px;
+}
+
+input.error {
+    border-color: rgb(255, 90, 90);
+}
+input.valid {
+    border-color: rgb(90, 255, 112);
+}
+
+p.form-error {
+    color: rgb(255, 90, 90);
+}
+
+button {
+    border: none;
+    height: 2rem;
+    border-radius: .5rem;
+    background-color: rgb(201, 201, 201);
+}
+
+
+h1 {
+    font-size: 3rem;
+
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Library Project</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <script src="bundle.js" defer></script>
+</head>
+<body>
+    <div class="library-info">
+        <h1>Book Library</h1>
+    </div>
+    <div class="library-controls">
+        <div class="button-container">
+            <button class="new-btn">+ New Book</button>
+        </div>
+        <div class="form-container">
+            <form action="" id="form" class="form">
+                <div>
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" class="form-input" placeholder="The Old Man & the Sea" required>
+                    <p class="form-error"></p>
+                </div>
+
+                <div>
+                    <label for="author">Author:</label>
+                    <input type="text" id="author" name="author" class="form-input" placeholder="Ernest Hemmingway" placeholder="The Old Man & the Sea" required>
+                    <p class="form-error"></p>
+                </div>
+
+                <div>
+                    <label for="pages">Number of Pages:</label>
+                    <input type="number" id="pages" name="pages" min="1" class="form-input" placeholder="420" required>
+                    <p class="form-error"></p>
+                </div>
+
+                <div>
+                    <label for="readY">Have Read</label>
+                    <input type="radio" id="readY" name="readYN" class="form-input" required>
+                    <label for="readN">Have Not Read</label>
+                    <input type="radio" id="readN" name="readYN" class="form-input" required>
+                    <p class="form-error"></p>
+                    <p class="form-error"></p>
+                </div>
+
+                <button id="submit">Submit</button>
+
+            </form>
+        </div>
+    </div>
+    <div class="library-container">
+        <!--Flex Div with div cards created and displayed for each book-->
+        <!--<div class="example book-info-card">
+            <p>Title: Book Title</p>
+            <p>Author: Mrs.Book Author</p>
+            <p>Pages: 69</p>
+            <button class="remove-btn">Remove</button>
+            <button class="read-btn">Read</button>
+        </div> -->
+
+    </div>
+    
+</body>
+</html>
